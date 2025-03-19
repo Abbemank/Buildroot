@@ -1,0 +1,31 @@
+
+#Script to initialize sc16is752 overlay using spi
+dtoverlay=sc16is752-spi1,int_pin=24
+
+#Unmount SD cards partitions prior to flashing
+sudo umount /dev/sda1
+sudo umount /dev/sda2
+
+#Flash buildroot image to SD card
+sudo dd if=output/images/sdcard.img of=/dev/sda bs=4M status=progress conv=fsync
+
+#Run brcmfmac module to enable wififile testmodbus
+modprobe brcmfmac
+
+#Run wpa_supplicant script to connect to WiFi (setup to connect to WiFi in Valby)
+/usr/sbin/wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf -C /var/run/wpa_supplicant
+
+#Generate IP-adress for PI (using Wifi)
+/sbin/udhcpc -i wlan0
+
+#Check IP-adress on PI
+ip addr
+
+#Configure sshd_config file to enable root login
+vi /etc/ssh/sshd_config
+
+#For new host key SSH on VS code
+ssh-keygen -f '/home/albin/.ssh/known_hosts' -R '192.168.1.22'
+
+#Start GDB server on PI
+

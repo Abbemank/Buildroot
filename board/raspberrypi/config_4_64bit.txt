@@ -22,8 +22,10 @@ gpu_mem_256=100
 gpu_mem_512=100
 gpu_mem_1024=100
 
+dtparam=spi=on
 # Enable UART0 for serial console on ttyAMA0
 dtoverlay=miniuart-bt
+dtoverlay=sc16is752-spi0,int_pin=24
 
 # enable autoprobing of Bluetooth driver without need of hciattach/btattach
 dtparam=krnbt=on
