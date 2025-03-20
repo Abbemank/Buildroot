@@ -27,5 +27,8 @@ vi /etc/ssh/sshd_config
 #For new host key SSH on VS code
 ssh-keygen -f '/home/albin/.ssh/known_hosts' -R '192.168.1.22'
 
+#Script to move binary file to PI
+scp controller/testmodbus root@192.168.1.76:/usr
+
 #Start GDB server on PI
 
